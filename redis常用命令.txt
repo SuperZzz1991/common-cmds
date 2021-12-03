@@ -1,0 +1,374 @@
+dindows
+	启动
+	redis-server.exe
+	redis-server.exe redis.windows.conf
+	进入
+	redis-cli.exe
+---------------------------------------------------------------------------------
+linux
+	tar -zxvf redis.6.2.4.tar.gz
+	cd redis.6.2.4
+	gcc --version
+	yum install gcc
+	make
+	make install
+	redis-server
+	cp redis.conf /etc/redis.conf
+	vi /etc/redis.conf
+		daemonize no -> daemonize yes
+	redis-server /etc/redis.conf
+	redis-cli
+		ping
+		shutdown
+	kill -9 pid
+---------------------------------------------------------------------------------
+常用CMD
+	keys *
+	exists key
+	type key
+	del key
+	unlink key选择非阻塞删除，后续异步删除
+	expire key 10
+	ttl key
+	select
+	dbsize
+	flushdb
+	flushall
+
+订阅/发布
+	subscribe channel1
+	publish channel1 hello
+---------------------------------------------------------------------------------
+string：二进制安全
+	set <key1> <value1>
+	get <key1>
+	append <key1> <value1>
+	strlen <key1>
+	setnx <key1> <value1> key不存在时写入，不更新
+	incr <key1> 加1
+	decr <key1> 减1
+	incrby/decrby <key> 10 加/减10
+
+	mset <key1> <value1> <key2> <value2> <key3> <value3>
+	mget <key1> <key2> <key3>
+	msetnx <key11> <value11> <key12> <value12>原子性
+
+	getrange key start end
+	setrange key 3 value
+	
+	setex <key1> expire <value1>
+	getset <key1> <value1> 以新替旧
+
+list：单键多值，双向链表（ ziplist -> quicklist）
+	lpush/rpush <key1> <value1> <value2> <value3>
+	lrange <key1> 0 -1
+	lpop/rpop <key1>
+
+	rpoplpush <key1> <key2>
+	
+	lindex <key1> i1
+	llen <key2>
+
+	linsert <key1> before/after "<value1>" "newvalue"
+	lrem <key1> 2 "delvalue"
+	lset <key1> index <value1>更新
+
+set：自动排重、hash、复杂度O(1)
+	sadd <key1> <value1> <value2>
+	smembers <key1>	取出所有
+	sismember <key1> <value1> 是否有value
+	scard <key1> 元素个数
+	srem <key1> <value1> <value2>
+	spop <key1> 随机吐出
+	srandmember <key1> n随机取出n个，不删除
+	smove <source> <destination> value 转移
+	sinter <key1> <key2> 返回交集
+	sunion <key1> <key2> 返回合集
+	sdiff <key1> <key2> 返回差集，以key1为准
+
+hash：key、field和value类似于Map<String,Object>，适合存储对象。ziplist -> hashtable
+	hset <key><field><value>
+	hget <key1><field>
+	hmset <key1><field1><value1><field2><value2>
+	hexists <key1><field>
+	hkeys <key>列出所有field
+	hvals <key>列出所有value
+	hincrby <key><field><increment>为哈希表的key的field的值加上增量 1 -1
+	hsetnx <key><field><value> field不存在时设置
+
+zset：有序set,score排序。Map<String,Double>。数据结构：hase结构(field=value,value=score)、跳跃表
+	zadd <key><score1><value1><score2><value2>
+	zrange <key><start><stop>[withscores]
+	zrangebyscore key minmax [withscores] [limit offset count]
+	zrevrangebyscore key maxmin [withscores] [limit offset count]
+	zincrby <key><increment><value> 加分
+	zrem <key><value>
+	zcount <key> <min> <max> 返回统计值
+	zrank <key> <value> 返回排名
+---------------------------------------------------------------------------------
+Bitmaps：位操作的字符串,存01组成的字符串。根据偏移量读写值(和set对比有时候节约空间)
+	setbit <key><offset><value>
+	getbit <key><offset>
+	bitcount <key><start><end>
+	bitop and(or/not/xor) <kestkey> [key...] 综合操作
+
+HyperLogLog：数量统计-基数问题(无重复元素)最少空间解决方案。(distinct、hash、set、bitmaps.占用空间)
+	pfadd <key><element> [element...]
+	pfcount <key>
+	pfmerge <destkey> <sourcekey> [sourcekey...] 合并
+
+Geospatial：支持GEO类型。地理经纬度操作
+	geoadd <key> <longitude> <latitude> <member> [longitude latitude member...]添加地理位置
+	geopos <key> <member> [member...]
+	geodist <key> <member1> <member2> [m|km|ft|mi]直线距离
+	georadius <key> <longitude> <latitude> radius m|km|ft|mi 以经纬度为中心找出半径内的元素
+
+---------------------------------------------------------------------------------
+事务：不被打扰。multi(组队) exec(执行) discard(放弃、取消) 
+事务冲突：
+	悲观锁：操作即上锁，操作后释放(行锁，表锁，读锁，写锁)
+	乐观锁(多读应用，提高吞吐量)：增加版本号，有修改增加版本号，下一个操作对比版本号。CAS判定(check-and-set)一致继续操作，否则不能操作。
+watch(监视)：乐观锁监视，打断事务操作
+---------------------------------------------------------------------------------
+秒杀案例：
+问题：
+	1.连结超时
+	2.超卖（多线程并发）
+	3.库存遗留（乐观锁，多线程版本号不一致，导致即使有库存其他人无法操作）
+解决方案：
+	1.Jedis连接池
+	2.乐观锁watch监视，multi组队实现事务操作
+	3.Lua脚本语言（嵌入式语言，将多个复杂操作合并成一个）
+---------------------------------------------------------------------------------
+持久化：RDB和AOF(都开启默认优先)
+
+RDB：在指定的时间间隔内将内存中的数据集快照（Snapshot）写入磁盘，恢复时直接读到内存
+配置：
+	save 时间间隔 变化的keys数量
+	dbfilename dump.rdb
+	save:手动保存，全部阻塞，不建议
+	bgsave:后台异步快照，不阻塞 
+原理：fork子进程创建临时文件，将需要持久化的数据写入，全部完成后临时文件替换dump.rdb
+缺点：最后一次持久话后的数据可能丢失、2倍空间膨胀(写时复制)
+优点：大数据恢复、完整性要求不高、节省磁盘空间、恢复速度块
+
+AOF(Append Only File)：以日志的形式来记录每个操作(增量保存)，将redis执行的所以写指令记录下来，只许追加文件但不可以改写文件。redis启动之初会读取该文件重新构建数据
+配置：
+	appendonly yes
+	appendfilename "appendonlu.aof"
+	同步频率：appendfsync always/everysec/no	始终/每秒/不主动同步，交由系统决定
+	重写压缩：rewrite
+异常恢复：redis-check-aof --fix appendonly.aof
+原理：
+	1.客户端的请求写命令会被追加到AOF缓冲区
+	2.AOF缓冲区根据AOF持久化策略[always/everysec/no]将操作sync同步到AOF文件中
+	3.AOF文件大小超过重写策略或手动重写时，回对AOF文件rewrite重写，压缩AOF文件容量
+	4.Redis服务重启时，会重写load加载AOF文件中的写操作达到数据恢复的目的
+优点：备份机制更稳健、丢失数据概率更低；可读的日志文本，通过操作AOF稳健，可以处理误操作
+缺点：比RDB占用更多空间；备份恢复速度慢；每次读写同步，有一定的性能压力；存在个别BUG，造成不能恢复
+---------------------------------------------------------------------------------
+主从复制：读写分离、容灾快速恢复
+步骤：
+	1.makedir /myredis
+	2.cp /etc/redis.conf /myredis/redis.conf
+	3.配置一主两从，创建三个配置文件
+		redis6379.conf
+		redis6380.conf
+		redis6381.conf
+	4.配置文件写入内容(方便操作关闭AOF:appendonly no)
+	  redis6379.conf
+		include /myredis/redis.conf
+		pidfile /var/run/redis_6379.pid
+		port 6379
+		dbfilename "dump6379.rdb"
+	  redis6380.conf
+		include /myredis/redis.conf
+		pidfile /var/run/redis_6380.pid
+		port 6380
+		dbfilename "dump6380.rdb"
+	  redis6381.conf
+		include /myredis/redis.conf
+		pidfile /var/run/redis_6381.pid
+		port 6381
+		dbfilename "dump6381.rdb"
+	5.启动三个redis服务
+		redis-server /myredis/redis6379.conf
+		redis-server /myredis/redis6380.conf
+		redis-server /myredis/redis6381.conf
+	  查看服务情况
+		redis-cli -p 6379
+		redis-cli -p 6380
+		redis-cli -p 6381
+		info replication
+	6.配从不配主slaveof <ip> <port>
+		在6380和6381上配置slaveof 127.0.0.1 6379
+---------------------------------------------------------------------------------
+主从复制原理：
+	1.从服务器连接上主服务器后，向主服务器发送进行数据同步消息
+	2.主服务器接到从服务器的同步消息，把主服务器数据进行持久化生成rdb文件，并把rdb文件发送到从服务器，从服务器拿到rdb进行读取
+	3.每次主服务器进行写操作之后，和从服务器进行数据同步
+
+主从问题：
+1.一主二仆：从<-主->从
+	a.从服务器宕机：需要手动重新配置主从，从主服务器重新复制数据
+	b.主服务器宕机：重启后还是主服务器，从服务器原地待命
+2.薪火相传：主->从->从
+3.反客为主：主服务器宕机，从服务器晋级为主服务器slaveof no one(手动操作)
+
+哨兵模式：反客为主的自动模式。原主服务器重启后变换为从服务器
+	cd /myredis
+	vi sentinel.conf
+	sentinel monitor <nickname> <ip> <port> <agreedSlaveNum >
+		eg.sentinel monitor mymaster 127.0.0.1 6379 1
+	redis-sentinel /myredis/sentinel.conf
+特点：
+	1.按优先级选择：slave-priority 100 越小优先级越高(replica-priority 4.0版本)
+	2.按偏移量选择，大的优先
+	3.runid最小的优先：启动时随机生成
+ 
+复制延时：主服务器生成rdb复制给从服务器，从服务器越多延时越多
+---------------------------------------------------------------------------------
+Redis集群
+解决问题：
+	1.Redis扩容
+	2.并发写Redis分摊
+	3.主从模式，主机宕机IP发生变化，应用程序中配置需要修改对应主机的IP地址端口等
+		a.代理主机模式：代理主机转发请求至对应的redis主从服务器
+		b.redis3.0无中心化集群：任意一台redis主动转发至对应的redis主从服务器
+优点：水平扩容、一定的可用性、分摊压力、无中心配置简单
+缺点：
+	1.多键操作不支持，需要按组
+	2.多键的redis事务不支持，lua脚本不支持
+	3.需要整体迁移，复杂度高
+
+搭建步骤(6台：6379、6380、6381、6389、6390、6391)：
+	1.cd /myredis
+	2.配置文件(方便操作关闭AOF:appendonly no)
+	  redis6379.conf
+	  	include /myredis/redis.conf
+		pidfile /var/run/redis_6379.pid
+		port 6379
+		dbfilename "dump6379.rdb"
+
+		#dir "/home/bigdata/redis_cluster"
+		#logfile "/home/bigdata/redis_cluster/redis_err_6379.log"
+
+		cluster-enabled yes	打开集群模式
+		cluster-config file nodes-6379.conf	设定节点配置文件名
+		cluster-node-timeout 15000	设定节点失联时间，超过该时间(毫秒)，集群自动进行主从切换
+	3.复制文件并替换端口号(:%s/6379/6380)
+	4.启动6个redis服务
+		redis-server /myredis/redis6379.conf
+	5.将6个节点合成一个集群(rb环境6版本后以集成)
+		cd /opt/redis-6.2.1/src	进入redis目录下的src目录
+		redis-cli --cluster create --cluster-replicas 1 [ip:port...]
+			yes 同意分组继续执行
+			--cluster-replicas 1 以最简单的方式组成集群，一组一从分为三组
+			All 16384 slots covered
+	6.redis-cli -c -p 6379	连结集群
+	  cluster nodes		查看节点信息
+
+节点分配原则：尽量保证每个主数据库运行在不同的IP地址，每个从库和主库不在同一个IP地址
+All 16384 slots covered:
+	1.redis集群 16384个插槽(0-16383)
+	2.主服务器1(0-5460)、主服务器2(5461-10922)、主服务器3(10923-16383)
+	3.set k1 value1
+		a.计算k1所在插槽
+		b.根据结果在插槽位置存储在对应的服务器上
+	  mset <key1>{组名} <value1> <key2>{组名} <value2> <key3>{组名} <value3>
+	  	依据组名计算插槽
+
+集群命令:
+	cluster keyslot <key>	计算key对应的插槽值
+	cluster countkeysinslot <slot>	查看插槽中对应的key数量(仅限自己的插槽范围，否则返回0)
+	cluster getkeysinslot <slot> <count> 返回slot插槽中count数量的key
+
+故障恢复：
+	1.redos-cli -c -p 6380
+	2.cluster nodes
+	主机宕机：从机成为主机，主机重启后作为从服务器
+	主从宕机：cluster-require-full-coverage  yes/no 全挂/其他插槽正常使用
+---------------------------------------------------------------------------------
+缓存穿透
+现象：
+	1.redis查询不到数据库
+	2.出现很多非正常URL访问
+原因：
+	1.应用服务器压力变大了
+	2.redis命中率降低
+	3.一直查询数据库
+解决方案：
+	1.对空值作缓存：查询数据为空，把空结果进行缓存，设置空结果过期时间很短，最长不超过5分钟
+	2.设置可访问白名单(白名单)：使用bitmaps类型定义可访问白名单，id作为偏移量，每次访问和bitmaps的id比较，不存在则拦截禁止访问
+	3.采用布隆过滤器
+	4.进行实时监控
+
+缓存击穿
+现象：
+	1.数据库访问压力瞬时增加
+	2.redis里面没有出现大量key过期
+	3.redis正常运行
+原因：redis某个key过期，大量访问使用这个key
+解决方案：
+	1.预先设置热门数据，并增加key时长
+	2.实时调整热门数据key过期时间
+	3.使用锁。完全避免、效率低
+
+缓存雪崩
+现象：数据库压力变大服务器崩溃
+原因：在极少时间段，查询大量key的集中过期情况
+解决方案：
+	1.构建多级缓存架构：ngix缓存+redis缓存+其他缓存(ehcache等)
+	2.使用锁或队列：效率低
+	3.设置过期标志更新缓存：记录缓存数据是否过期(设置提前量)，如果过期触发其他线程在后台更新实际key的缓存
+	4.将缓存失效时间分散开：失效时间增加一个随机值
+---------------------------------------------------------------------------------
+分布式锁：
+解决问题：分布式多线程。跨JVM的互斥机制来控制共享资源的访问
+实现方案：
+	1.基于数据库实现分布式锁
+	2.基于缓存(Redis等)：性能最高
+	3.基于Zookeeper：可靠性最高
+
+redis缓存：
+	1.使用setnx设置锁，通过del释放锁
+	2.锁一直没有释放，expire设置过期时间，自动释放
+	3.上锁之后突然出现异常，无法设置过期时间
+		*上锁的时候同时设置过期时间(set <key> <value> nx ex <expireTime>)
+场景问题：
+	1.a、b、c三个请求操作同一个key，key过期时间为10秒
+	2.a先操作：上锁，具体操作过程未结束服务器卡顿，10秒后自动释放
+	3.b获取到锁：上锁，具体操作未结束，a服务器反应过来，主动释放锁(此时锁是b的)
+解决方案：
+	1.使用uuid防止误删。
+		*set lockKey uuid nx ex 10
+		*Boolean lock = redisTemplate.opsForValue.setIfAbsent("lock",uuid,3,TimeUnit.SECONDS);
+	2.释放锁的时候判断当前uuid和要释放锁的uuid释放一样 
+
+场景问题：缺乏原子性操作
+	1.a、b两个请求操作同一个key，key过期时间为10秒
+	2.a先操作：上锁，具体操作过程完成，比较uuid一致，正要删除时锁到达过期时间自动释放
+	3.b获取到锁：上锁，具体操作未结束，此时a进行了主动释放锁，b的锁被删除
+解决方案：lua脚本
+
+分布式锁四个条件：
+	1.互斥性。任意时刻只有一个客户端持有锁
+	2.不会发生死锁
+	3.加锁和解锁必须是同一个客户端，不能操作别人的锁
+	4.加锁和解锁必须具有原子性
+---------------------------------------------------------------------------------
+新功能
+
+ACL(Access Controller List)：访问控制列表，进行更细粒度的权限控制
+	1.接入权限：用户名和密码
+	2.可以执行的命令
+	3.可以操作的key
+命令：
+	acl list	显示用户名和密码等信息
+	acl cat		显示所有命令
+
+IO多线程：处理网络数据的读写和协议解析，执行命令仍然是单线程
+配置：io-threads-do-reads yes
+      io-threads 4
+
+工具支持Cluster：6版本之后不需要单独安装rb环境

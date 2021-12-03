@@ -1,0 +1,74 @@
+https://www.runoob.com/docker/centos-docker-install.html
+
+删除旧版本
+yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+安装依赖包
+yum install -y yum-utils \
+  device-mapper-persistent-data \
+  lvm2
+
+设置国内镜像
+yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+yum-config-manager \
+    --add-repo \
+    https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo
+初始化安装
+yum install docker-ce docker-ce-cli containerd.io
+
+卸载删除
+yum remove docker-ce
+rm -rf /var/lib/docker
+
+启动        
+systemctl start docker
+守护进程重启   
+sudo systemctl daemon-reload
+重启docker服务   
+systemctl restart  docker
+重启docker服务  
+sudo service docker restart
+关闭docker 
+service docker stop
+关闭docker 
+systemctl stop docker
+
+
+启动容器
+docker start redis-test
+停止容器
+docker stop <容器 ID>
+重启容器
+docker restart <容器 ID>
+进入容器
+docker exec -it redis-test /bin/bash
+
+后台r
+docker run -itd --name redis-test -p 6379:6379 redis
+导出容器
+docker export 1e560fca3906 > ubuntu.tar
+导入容器
+cat docker/ubuntu.tar | docker import - test/ubuntu:v1
+docker import http://example.com/exampleimage.tgz example/imagerepo
+删除容器
+docker rm -f 1e560fca3906
+
+查找镜像
+docker search redis
+拉取镜像
+docker pull redis:latest
+查看镜像
+docker images
+启动镜像
+docker run redis
+删除镜像
+docker rmi redis
