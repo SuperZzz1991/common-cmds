@@ -1,1 +1,257 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>锻炼计划</title>
+<style>
+@page intro { size: A4 landscape; margin: 8mm; }
+@page calendar { size: A4 landscape; margin: 7mm; }
+* { box-sizing: border-box; }
+html, body { margin: 0; color: #17202a; font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; }
+body { font-size: 9pt; }
+.page { page-break-after: always; break-after: page; }
+.page:last-child { page-break-after: auto; break-after: auto; }
+.intro-page { page: intro; min-height: 194mm; }
+.intro-page h1 { margin: 0 0 4mm; font-size: 18pt; text-align: center; }
+.intro-grid { display: grid; grid-template-columns: 0.9fr 1.35fr; gap: 8mm; }
+.intro-grid section { min-width: 0; }
+h2 { margin: 0 0 2.5mm; font-size: 12pt; border-bottom: 1px solid #667085; padding-bottom: 1mm; }
+.intro-grid ul { margin: 0; padding-left: 5mm; }
+.intro-grid li { margin: 0 0 1.5mm; line-height: 1.25; }
+.moves ul { display: grid; grid-template-columns: 1fr 1fr; column-gap: 6mm; }
+.month-page { page: calendar; min-height: 196mm; }
+.month-page h2 { margin: 0 0 2mm; text-align: center; font-size: 15pt; border: 0; }
+.month-grid { width: 100%; height: 178mm; table-layout: fixed; border-collapse: collapse; }
+.month-grid th, .month-grid td { border: 0.25mm solid #7b8490; }
+.month-grid th { height: 7mm; font-size: 8pt; }
+.month-grid td { vertical-align: top; padding: 1.1mm; font-size: 6.5pt; line-height: 1.15; overflow-wrap: anywhere; }
+.month-grid tbody tr { break-inside: avoid; page-break-inside: avoid; }
+.day-number { display: block; margin-bottom: 0.6mm; font-size: 8pt; font-weight: 700; }
+.activities { white-space: normal; }
+.note { margin-top: 2mm; font-size: 8pt; }
+@media screen {
+  body { background: #e7e9ec; }
+  .page { width: 281mm; margin: 8mm auto; padding: 5mm; background: #fff; box-shadow: 0 1mm 4mm #aab0b8; }
+}
+@media print {
+  body { background: #fff; }
+  .page { margin: 0; padding: 0; }
+}
+</style>
+</head><body>
+<section class="page intro-page">
+<h1>锻炼计划</h1><div class="intro-grid">
+<section class="standards"><h2>1. 强度标准</h2>
+<ul>
+<li><strong>恢复骑（RPE 2–3/10）</strong>：轻松低强度，可以轻松交谈；主要用于周一、周五和周日，不追求速度。</li>
+<li><strong>基础耐力（RPE 3–4/10）</strong>：可以连续说完整句子，主要用于周二和周六。</li>
+<li><strong>节奏强度（RPE 5–6/10）</strong>：呼吸明显加快，但可以说短句，主要用于周三。</li>
+<li><strong>短间歇（RPE 6–7/10）</strong>：稍快但不冲刺，主要用于周四；每次快段后充分恢复。</li>
+<li><strong>训练重点</strong>：结合骑行和居家力量进行全身减脂，逐步降低总体体脂以减轻腹部脂肪；脂肪无法只靠腹部训练局部减少。改善骨盆前倾相关控制时，重点练习核心稳定、臀部与髋后侧力量及髋前侧活动度。</li>
+<li>疲劳、睡眠变差或膝痛时，可重复上一周，不强行加量。</li>
+<li>不把极限冲刺和大阻力爬坡作为常规训练。耐力训练以持续时间为主，不以每次都骑得很快为目标。</li>
+<li>每周安排 1 天休息，日期自由安排。</li>
+</ul>
+</section>
+<section class="moves"><h2>力量训练动作说明</h2>
+<ul>
+<li><strong>4 kg 壶铃硬拉</strong>：双脚髋宽，髋部向后推，背部保持中立，壶铃贴近身体；站起时收臀，避免用腰代偿。</li>
+<li><strong>臀桥</strong>：仰卧屈膝，呼气抬髋并收紧臀部，肋骨下沉；不向上顶腰。</li>
+<li><strong>死虫式</strong>：仰卧屈髋屈膝，腰部轻贴地；对侧手脚缓慢伸展，呼气收腹。</li>
+<li><strong>半跪髋屈肌拉伸</strong>：半跪姿，腹部轻收、骨盆微后倾，身体小幅前移；避免塌腰。</li>
+<li><strong>4 kg 壶铃杯式深蹲</strong>：壶铃贴胸，肋骨收住，臀部向后下蹲，膝盖对齐脚尖。</li>
+<li><strong>髋后伸</strong>：扶稳椅子，躯干保持稳定，腿向后伸至臀部发力；避免塌腰。</li>
+<li><strong>鸟狗式</strong>：手膝撑地，伸展对侧手脚；保持骨盆稳定，不旋转或塌腰。</li>
+<li><strong>壶铃单手提重</strong>：单手持壶铃，躯干保持直立，不向持铃侧倾斜；可原地踏步或短距离行走。</li>
+</ul>
+</section>
+</div></section>
+<section class="page month-page">
+<h2>2026 年 10 月</h2><table class="month-grid"><thead>
+<tr>
+<th>周一</th>
+<th>周二</th>
+<th>周三</th>
+<th>周四</th>
+<th>周五</th>
+<th>周六</th>
+<th>周日</th>
+</tr>
+</thead><tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="day-number">1</span><div class="activities">无</div></td>
+<td><span class="day-number">2</span><div class="activities">无</div></td>
+<td><span class="day-number">3</span><div class="activities">无</div></td>
+<td><span class="day-number">4</span><div class="activities">无</div></td>
+</tr>
+<tr>
+<td><span class="day-number">5</span><div class="activities">无</div></td>
+<td><span class="day-number">6</span><div class="activities">无</div></td>
+<td><span class="day-number">7</span><div class="activities">无</div></td>
+<td><span class="day-number">8</span><div class="activities">无</div></td>
+<td><span class="day-number">9</span><div class="activities">无</div></td>
+<td><span class="day-number">10</span><div class="activities">调休上班<br>无</div></td>
+<td><span class="day-number">11</span><div class="activities">无</div></td>
+</tr>
+<tr>
+<td><span class="day-number">12</span><div class="activities">恢复骑20分钟</div></td>
+<td><span class="day-number">13</span><div class="activities">基础耐力骑30分钟</div></td>
+<td><span class="day-number">14</span><div class="activities">节奏骑20分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃硬拉2组×8次<br>臀桥2组×8次<br>死虫式2组×每侧8次<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+<td><span class="day-number">15</span><div class="activities">短间歇骑30分钟（4次×1分钟）</div></td>
+<td><span class="day-number">16</span><div class="activities">恢复骑15分钟</div></td>
+<td><span class="day-number">17</span><div class="activities">基础耐力骑50分钟</div></td>
+<td><span class="day-number">18</span><div class="activities">恢复骑30分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃杯式深蹲2组×8次<br>髋后伸2组×每侧8次<br>鸟狗式2组×每侧8次<br>壶铃单手提重2组×20秒/侧<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+</tr>
+<tr>
+<td><span class="day-number">19</span><div class="activities">恢复骑20分钟</div></td>
+<td><span class="day-number">20</span><div class="activities">基础耐力骑35分钟</div></td>
+<td><span class="day-number">21</span><div class="activities">节奏骑25分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃硬拉2组×8次<br>臀桥2组×8次<br>死虫式2组×每侧8次<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+<td><span class="day-number">22</span><div class="activities">短间歇骑30分钟（5次×1分钟）</div></td>
+<td><span class="day-number">23</span><div class="activities">恢复骑15分钟</div></td>
+<td><span class="day-number">24</span><div class="activities">基础耐力骑55分钟</div></td>
+<td><span class="day-number">25</span><div class="activities">恢复骑35分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃杯式深蹲2组×8次<br>髋后伸2组×每侧8次<br>鸟狗式2组×每侧8次<br>壶铃单手提重2组×20秒/侧<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+</tr>
+<tr>
+<td><span class="day-number">26</span><div class="activities">恢复骑20分钟</div></td>
+<td><span class="day-number">27</span><div class="activities">基础耐力骑40分钟</div></td>
+<td><span class="day-number">28</span><div class="activities">节奏骑30分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃硬拉2组×10次<br>臀桥2组×10次<br>死虫式2组×每侧10次<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+<td><span class="day-number">29</span><div class="activities">短间歇骑35分钟（5次×2分钟）</div></td>
+<td><span class="day-number">30</span><div class="activities">恢复骑20分钟</div></td>
+<td><span class="day-number">31</span><div class="activities">基础耐力骑60分钟</div></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="page month-page">
+<h2>2026 年 11 月</h2><table class="month-grid"><thead>
+<tr>
+<th>周一</th>
+<th>周二</th>
+<th>周三</th>
+<th>周四</th>
+<th>周五</th>
+<th>周六</th>
+<th>周日</th>
+</tr>
+</thead><tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="day-number">1</span><div class="activities">恢复骑35分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃杯式深蹲2组×10次<br>髋后伸2组×每侧10次<br>鸟狗式2组×每侧10次<br>壶铃单手提重2组×25秒/侧<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+</tr>
+<tr>
+<td><span class="day-number">2</span><div class="activities">恢复骑20分钟</div></td>
+<td><span class="day-number">3</span><div class="activities">基础耐力骑40分钟</div></td>
+<td><span class="day-number">4</span><div class="activities">节奏骑35分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃硬拉2组×10次<br>臀桥2组×10次<br>死虫式2组×每侧10次<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+<td><span class="day-number">5</span><div class="activities">短间歇骑35分钟（6次×2分钟）</div></td>
+<td><span class="day-number">6</span><div class="activities">恢复骑20分钟</div></td>
+<td><span class="day-number">7</span><div class="activities">基础耐力骑65分钟</div></td>
+<td><span class="day-number">8</span><div class="activities">恢复骑40分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃杯式深蹲2组×10次<br>髋后伸2组×每侧10次<br>鸟狗式2组×每侧10次<br>壶铃单手提重2组×25秒/侧<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+</tr>
+<tr>
+<td><span class="day-number">9</span><div class="activities">恢复骑25分钟</div></td>
+<td><span class="day-number">10</span><div class="activities">基础耐力骑45分钟</div></td>
+<td><span class="day-number">11</span><div class="activities">节奏骑35分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃硬拉2组×12次<br>臀桥2组×12次<br>死虫式2组×每侧12次<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+<td><span class="day-number">12</span><div class="activities">短间歇骑40分钟（5次×3分钟）</div></td>
+<td><span class="day-number">13</span><div class="activities">恢复骑20分钟</div></td>
+<td><span class="day-number">14</span><div class="activities">基础耐力骑70分钟</div></td>
+<td><span class="day-number">15</span><div class="activities">恢复骑40分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃杯式深蹲2组×12次<br>髋后伸2组×每侧12次<br>鸟狗式2组×每侧12次<br>壶铃单手提重2组×30秒/侧<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+</tr>
+<tr>
+<td><span class="day-number">16</span><div class="activities">恢复骑25分钟</div></td>
+<td><span class="day-number">17</span><div class="activities">基础耐力骑45分钟</div></td>
+<td><span class="day-number">18</span><div class="activities">节奏骑40分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃硬拉2组×12次<br>臀桥2组×12次<br>死虫式2组×每侧12次<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+<td><span class="day-number">19</span><div class="activities">短间歇骑40分钟（6次×3分钟）</div></td>
+<td><span class="day-number">20</span><div class="activities">恢复骑20分钟</div></td>
+<td><span class="day-number">21</span><div class="activities">基础耐力骑75分钟</div></td>
+<td><span class="day-number">22</span><div class="activities">恢复骑45分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃杯式深蹲2组×12次<br>髋后伸2组×每侧12次<br>鸟狗式2组×每侧12次<br>壶铃单手提重2组×30秒/侧<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+</tr>
+<tr>
+<td><span class="day-number">23</span><div class="activities">恢复骑25分钟</div></td>
+<td><span class="day-number">24</span><div class="activities">基础耐力骑50分钟</div></td>
+<td><span class="day-number">25</span><div class="activities">节奏骑40分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃硬拉3组×10次<br>臀桥3组×10次<br>死虫式3组×每侧10次<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+<td><span class="day-number">26</span><div class="activities">短间歇骑45分钟（5次×4分钟）</div></td>
+<td><span class="day-number">27</span><div class="activities">恢复骑20分钟</div></td>
+<td><span class="day-number">28</span><div class="activities">基础耐力骑80分钟</div></td>
+<td><span class="day-number">29</span><div class="activities">恢复骑45分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃杯式深蹲3组×10次<br>髋后伸3组×每侧10次<br>鸟狗式3组×每侧10次<br>壶铃单手提重3组×30秒/侧<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+</tr>
+<tr>
+<td><span class="day-number">30</span><div class="activities">恢复骑30分钟</div></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="page month-page">
+<h2>2026 年 12 月</h2><table class="month-grid"><thead>
+<tr>
+<th>周一</th>
+<th>周二</th>
+<th>周三</th>
+<th>周四</th>
+<th>周五</th>
+<th>周六</th>
+<th>周日</th>
+</tr>
+</thead><tbody>
+<tr>
+<td></td>
+<td><span class="day-number">1</span><div class="activities">基础耐力骑50分钟</div></td>
+<td><span class="day-number">2</span><div class="activities">节奏骑45分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃硬拉3组×10次<br>臀桥3组×10次<br>死虫式3组×每侧10次<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+<td><span class="day-number">3</span><div class="activities">短间歇骑45分钟（6次×4分钟）</div></td>
+<td><span class="day-number">4</span><div class="activities">恢复骑20分钟</div></td>
+<td><span class="day-number">5</span><div class="activities">基础耐力骑85分钟</div></td>
+<td><span class="day-number">6</span><div class="activities">恢复骑50分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃杯式深蹲3组×10次<br>髋后伸3组×每侧10次<br>鸟狗式3组×每侧10次<br>壶铃单手提重3组×30秒/侧<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+</tr>
+<tr>
+<td><span class="day-number">7</span><div class="activities">恢复骑30分钟</div></td>
+<td><span class="day-number">8</span><div class="activities">基础耐力骑50分钟</div></td>
+<td><span class="day-number">9</span><div class="activities">节奏骑45分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃硬拉3组×12次<br>臀桥3组×12次<br>死虫式3组×每侧12次<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+<td><span class="day-number">10</span><div class="activities">短间歇骑45分钟（6次×4分钟）</div></td>
+<td><span class="day-number">11</span><div class="activities">恢复骑20分钟</div></td>
+<td><span class="day-number">12</span><div class="activities">基础耐力骑85分钟</div></td>
+<td><span class="day-number">13</span><div class="activities">恢复骑50分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃杯式深蹲3组×12次<br>髋后伸3组×每侧12次<br>鸟狗式3组×每侧12次<br>壶铃单手提重3组×30秒/侧<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+</tr>
+<tr>
+<td><span class="day-number">14</span><div class="activities">恢复骑30分钟</div></td>
+<td><span class="day-number">15</span><div class="activities">基础耐力骑50分钟</div></td>
+<td><span class="day-number">16</span><div class="activities">节奏骑45分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃硬拉3组×12次<br>臀桥3组×12次<br>死虫式3组×每侧12次<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+<td><span class="day-number">17</span><div class="activities">短间歇骑45分钟（6次×4分钟）</div></td>
+<td><span class="day-number">18</span><div class="activities">恢复骑20分钟</div></td>
+<td><span class="day-number">19</span><div class="activities">基础耐力骑85分钟</div></td>
+<td><span class="day-number">20</span><div class="activities">恢复骑50分钟<br>居家力量约10–15分钟<br>热身3–5分钟<br>4 kg壶铃杯式深蹲3组×12次<br>髋后伸3组×每侧12次<br>鸟狗式3组×每侧12次<br>壶铃单手提重3组×30秒/侧<br>半跪髋屈肌拉伸每侧30秒×2组</div></td>
+</tr>
+<tr>
+<td><span class="day-number">21</span><div class="activities">无</div></td>
+<td><span class="day-number">22</span><div class="activities">无</div></td>
+<td><span class="day-number">23</span><div class="activities">无</div></td>
+<td><span class="day-number">24</span><div class="activities">无</div></td>
+<td><span class="day-number">25</span><div class="activities">无</div></td>
+<td><span class="day-number">26</span><div class="activities">无</div></td>
+<td><span class="day-number">27</span><div class="activities">无</div></td>
+</tr>
+<tr>
+<td><span class="day-number">28</span><div class="activities">无</div></td>
+<td><span class="day-number">29</span><div class="activities">无</div></td>
+<td><span class="day-number">30</span><div class="activities">无</div></td>
+<td><span class="day-number">31</span><div class="activities">无</div></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+</body></html>
 
